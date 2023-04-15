@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.app }}
+    version: {{ .Values.appVersion}}
+    commitId: {{ .Values.commitId}}
+    gitBranch: {{ .Values.gitBranch }}
+    gitRepoName: {{ .Values.gitRepoName}}
+    gitOrgName: {{ .Values.gitOrgName}}
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules: 
+  - host: {{ .Values.tlsHostName }}
+    http:
+      paths:
+      {{- if not .Values.deployment_exist }}
+      - path: /{{ .Values.name }}(/|$)(.*){{ end }}
+      {{- if and (eq .Values.strategy "blue-green") (.Values.deployment_exist)}}
+      - path: /{{ .Values.name }}-next(/|$)(.*){{end}}
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.name }}
+            port:
+              number: {{ .Values.port | default 8080 }}
+  tls:
+  - hosts:
+    - {{ .Values.tlsHostName }}
+    secretName: {{ .Values.tlsSecret }}

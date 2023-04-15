@@ -1,0 +1,17 @@
+{{- if and .Values.config .Values.config.production }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.app }}
+    version: {{ .Values.appVersion}}
+    commitId: {{ .Values.commitId}}
+    gitBranch: {{ .Values.gitBranch }}
+    gitRepoName: {{ .Values.gitRepoName}}
+    gitOrgName: {{ .Values.gitOrgName}}
+data:
+{{- range $k, $v := .Values.config.production }} 
+  {{$k}}: {{$v}}
+{{- end }}
+{{ end }}
