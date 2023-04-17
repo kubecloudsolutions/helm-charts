@@ -13,7 +13,7 @@ metadata:
     appdAppName: {{ .Values.appdAppName }}
     framework: {{ .Values.framework }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.replicas.count }}
   selector:
     matchLabels:
       app: {{ .Values.app }}
@@ -45,11 +45,11 @@ spec:
           protocol: TCP
         resources:
           requests:
-            memory: {{.Values.requestMemory | default "128Mi"}}
-            cpu: {{ .Values.requestCpu | default "50m"}}
+            memory: {{.Values.replicas.memory | default "128Mi"}}
+            cpu: {{ .Values.replicas.cpu | default "50m"}}
           limits:
-            memory: {{ .Values.limitMemory | default "256Mi" }}
-            cpu: {{ .Values.limitCpu | default "100m"}}
+            memory: {{ .Values.replicas.memory | default "256Mi" }}
+            cpu: {{ .Values.replicas.cpu | default "100m"}}
         envFrom:
         {{- if and .Values.config .Values.config.production }}
         - configMapRef:
