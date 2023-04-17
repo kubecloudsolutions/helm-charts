@@ -2,6 +2,13 @@ apiVersion: v1
 entries:
   microservice:
   - apiVersion: v2
+    created: "2023-04-17T16:46:50.335637111Z"
+    digest: f3c60c6d5de2877848afef7b35cf59d1c1801df4dfbf6508f6e95ee0b1b8281b
+    name: microservice
+    urls:
+    - https://github.com/kubecloudsolutions/helm-charts/releases/download/microservice-1.0.3/microservice-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     created: "2023-04-17T13:36:36.230437636Z"
     digest: f1f808049ec4559a20e1e4db1d6cc46ede7ee7acfc298466236bbff3f4337e73
     name: microservice
@@ -22,4 +29,4 @@ entries:
     urls:
     - https://github.com/kubecloudsolutions/helm-charts/releases/download/microservice-1.0.0/microservice-1.0.0.tgz
     version: 1.0.0
-generated: "2023-04-17T13:36:36.230475937Z"
+generated: "2023-04-17T16:46:50.335659512Z"
